@@ -1,0 +1,89 @@
+<UserNote>
+  <VOL>
+    <ID>2</ID>
+    <PATH>/s0/scr/doledec/DATA/TSP_sedflood.fdm</PATH>
+  </VOL>
+  <PRIO>
+    <ID>10</ID>
+    <TEXT>LOW</TEXT>
+  </PRIO>
+  <PRIO>
+    <ID>20</ID>
+    <TEXT>MEDIUM</TEXT>
+  </PRIO>
+  <PRIO>
+    <ID>30</ID>
+    <TEXT>HIGH</TEXT>
+  </PRIO>
+  <PRIO>
+    <ID>40</ID>
+    <TEXT>URGENT</TEXT>
+  </PRIO>
+  <PRIO>
+    <ID>50</ID>
+    <TEXT>CRITICAL</TEXT>
+  </PRIO>
+  <STATE>
+    <ID>10</ID>
+    <TEXT>To Do</TEXT>
+  </STATE>
+  <STATE>
+    <ID>20</ID>
+    <TEXT>Active</TEXT>
+  </STATE>
+  <STATE>
+    <ID>30</ID>
+    <TEXT>Testing</TEXT>
+  </STATE>
+  <STATE>
+    <ID>40</ID>
+    <TEXT>To discuss</TEXT>
+  </STATE>
+  <STATE>
+    <ID>50</ID>
+    <TEXT>To review</TEXT>
+  </STATE>
+  <STATE>
+    <ID>60</ID>
+    <TEXT>QC</TEXT>
+  </STATE>
+  <STATE>
+    <ID>70</ID>
+    <TEXT>Concluded</TEXT>
+  </STATE>
+  <STATE>
+    <ID>80</ID>
+    <TEXT>Discarded</TEXT>
+  </STATE>
+  <ITEM>
+    <ID>2</ID>
+    <TEXT></TEXT>
+    <USERCOMMENTS></USERCOMMENTS>
+    <PRIO>20</PRIO>
+    <TIME>2015-10-23 17:2</TIME>
+    <POS4D>115700.000000 46680.000000 13794.016602 1.000000</POS4D>
+    <VOLID>2</VOLID>
+    <STATE>10</STATE>
+  </ITEM>
+  <ITEM>
+    <ID>4</ID>
+    <TEXT></TEXT>
+    <USERCOMMENTS></USERCOMMENTS>
+    <PRIO>20</PRIO>
+    <TIME>2015-10-23 17:2</TIME>
+    <POS4D>115700.000000 46680.000000 13794.016602 1.000000</POS4D>
+    <VOLID>2</VOLID>
+    <STATE>10</STATE>
+  </ITEM>
+  <ITEM>
+    <ID>5</ID>
+    <TEXT></TEXT>
+    <USERCOMMENTS></USERCOMMENTS>
+    <PRIO>20</PRIO>
+    <TIME>2015-10-23 17:7</TIME>
+    <POS4D>115700.000000 46680.000000 13794.016602 1.000000</POS4D>
+    <VOLID>2</VOLID>
+    <STATE>10</STATE>
+  </ITEM>
+  <FREEHEADER>Comment</FREEHEADER>
+</UserNote>

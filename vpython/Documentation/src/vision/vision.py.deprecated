@@ -1,0 +1,253 @@
+""" This module will illustrate the vision from tornado python scripting interface
+
+   vision package is used to communicate with tornado GUI
+ 
+Features: 
+
+       - Data access to the current displayed data : :class:`Vision`
+
+
+   .. warning::
+          This module can only be imported and used under Tornado GUI mode (python dialog). Importing and using 
+          this module under command line or torpy module will result in failure.
+
+"""
+
+vision="object"
+"""vision is an instance of Vision, all the interfaces of :class:`Vision` should be accessed via this instance
+   
+   
+"""
+class Vision():
+    """This class support communications between python and Tornado UI
+    
+    - A few basic features have been defined: 
+    
+          - :func:`getCurrentAttribute`              : get the current attribute in data manager
+          - :func:`getCurrentHorizon`                : get the current horizon, which is displayed by tornado
+          - :func:`getCurrentSeismic`                : get the current seismic data in data manager
+          - :func:`getCurrentHorizonGroup`           : get the current horizon group in data manager
+          - :func:`getAttribute`                     : get the attribute listed in data manager by name
+          - :func:`getSeismic`                       : get the seismic listed in data manager by name
+          - :func:`getHorizonGroup`                  : get the horizon group listed in data manager by name
+
+          - :func:`addAttribute`                     : add the volume to tornado (as a new data)
+
+
+    - Get an instance of Vision class:
+
+          :Example:
+       
+          >>> from vision import * 
+          
+    - The example below shows how to use Vision module to get the current attribute, seismic and horizon to 
+      modify there value under Tornado GUI mode
+
+    .. code-block:: python
+
+       from base import *
+       from Vision import * # warning, do not run with -script, will crash
+
+       #use vision package to get the current working horizon
+       hrz=vision.getCurrentHorizon()
+       
+       #use Horizon Interface to do update
+       size=hrz.getSize()
+       
+       for i in range(size[0]):
+           for j in range(size[1]):
+               # return two, found is boolean, val is value for Depth
+               # if found value, val will be updated
+               val=hrz.getValue(i,j,'DEPTH')
+               #only update those without values
+               if ( val!=None):
+                   hrz.setValue(i,j,'DEPTH',200)
+
+
+       # now test the current attribute
+       attr=vision.getCurrentAttribute()
+       size=attr.getSize()
+       for i in range(size[0]/2,size[0]):
+           for j in range(size[1]/2, size[1]):
+               for k in range(size[2]/2,size[2]):
+                   val=attr.getValue(i,j,k)
+                   attr.setValue(i,j,k,val/2)
+
+       # now test the current seismic
+       seis=vision.getCurrentSeismic()
+       size=seis.getSize()
+       for i in range(size[0]/2,size[0]):
+           for j in range(size[1]/2, size[1]):
+               for k in range(size[2]/2,size[2]):
+                   val=seis.getValue(i,j,k)
+                   seis.setValue(i,j,k,val*2)
+
+
+    .. note::
+        A more practical way is to check if you have got a None object due to your typo
+ 
+    Below are details for each method:
+
+    """
+
+    def getCurrentAttribute(self):
+        """returns a Volume object
+
+        get the current displayed attribute
+               
+        :param: No parameter
+        :returns: attribute volume, if does not exist, returns None
+        :rtype: :class:`Volume`
+
+        :Example:
+
+        >>> from vision import *
+        >>> attr = vision.getCurrentAttribute()
+
+
+        """
+        return None
+
+    def getCurrentHorizon(self):
+        """returns a Horizon object
+
+        get the current displayed Horizon
+               
+        :param: No parameter
+        :returns: Horizon object, if does not exist, returns None
+        :rtype: :class:`Horizon`
+
+        :Example:
+
+        >>> from vision import *
+        >>> hrz = vision.getCurrentHorizon()
+
+
+        """
+        return None
+
+
+    def getCurrentHorizonGroup(self):
+        """returns a HorizonGroup object
+
+        get the current displayed Horizon Group
+               
+        :param: No parameter
+        :returns: HorizonGroup object, if does not exist, returns None
+        :rtype: :class:`HorizonGroup`
+
+        :Example:
+
+        >>> from vision import *
+        >>> hg = vision.getCurrentHorizonGroup()
+
+
+        """
+        return None
+
+    def getCurrentSeismic(self):
+        """returns a Volume object
+
+        get the current displayed seismic volume
+               
+        :param: No parameter
+        :returns: seismic volume, if does not exist, returns None
+        :rtype: :class:`Volume`
+
+        :Example:
+
+        >>> from vision import *
+        >>> seis = vision.getCurrentSeismic()
+
+
+        """
+        return None    
+
+
+    def getAttribute(self, name):
+        """returns attribute Volume object with the name you give
+
+        provide the name and use the name to search through the loaded
+        attribute data and return the first attribute which matches the name
+               
+        :param name: Attribute name ('xxxx.fdm.gz'...)
+        :type name: string
+        :returns: attribute volume or None if does not exist
+        :rtype: :class:`Volume`
+
+        :Example:
+
+        >>> from vision import *
+        >>> attr = vision.getAttribute('xxxx.fdm.gz')
+
+        """
+        return None
+
+    def getSeismic(self, name):
+        """returns seismic with the name you give
+
+        provide the name and use the name to search through the loaded
+        seismic data and return the first attribute which matches the name
+               
+        :param name: seismic name ('xxxx.fdm.gz'...)
+        :type attribute: string
+        :returns: seismic volume or None if does not exist
+        :rtype: :class:`Volume`
+
+        :Example:
+
+        >>> from vision import *
+        >>> seis = vision.getSeismic('xxxx.fdm.gz')
+
+        """
+        return None
+
+    def getHorizonGroup(self, name):
+        """returns a HorizonGroup object with the name you give
+
+        provide the name and use the name to search through the loaded
+        horizon group and return the first horizon group which matches the name
+               
+        :param name: horizon group name ('xxxx.hrz'...)
+        :type name: string
+        :returns: HorizonGroup object or None if does not exist
+        :rtype: :class:`HorizonGroup`
+
+        :Example:
+
+        >>> from vision import *
+        >>> hg = vision.getHorizonGroup('xxxx.hrz')
+
+        """
+        return None
+
+
+
+    def addAttribute(self, volume, name):
+        """add the volume to tornado (as a new data)
+
+        :param volume: attribute volume
+        :type name: Volume
+               
+        :param name: name of the new data in tornado
+        :type name: string
+        :returns: None
+
+        :Example:
+
+        >>> from vision import *
+        >>> 
+        >>> data=Volume()
+        >>> data.load('/s0/scr/essai.fdm')
+        >>> ... Do the smoothing
+        >>> hg = vision.addAttribute( data,'smooth')
+
+        """
+        return None
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    
+

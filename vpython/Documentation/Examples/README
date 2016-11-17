@@ -1,0 +1,1 @@
+ ./tornadoi.db7 -script $SCRIPT_NAME -nodisplay

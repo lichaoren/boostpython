@@ -1,0 +1,491 @@
+""" This module will illustrate the snapshot features from tornado python scripting interface
+
+   vision package is used to create images (png, jpeg..) 
+
+   .. warning::
+          This module can only be imported and used under Tornado GUI mode (python dialog). Importing and using 
+          this module under command line or torpy module will result in failure.
+
+
+    Below is an example to create images from the main window at diff IL/XL for two seismic/attributes dataset :
+
+    .. code-block:: python
+
+       from base import Volume
+       from vision import *
+       
+       #######  Create the parameters
+       param = CaptureParameters()
+
+       #######  File settings
+       fileParameters = CaptureFileParameters()
+       fileParameters.setPrefix("xxxx")
+       # Output directory
+       fileParameters.setPath("/tmp/")
+       # Image format: png, jpg, png
+       fileParameters.setFormat("png")
+       # Name of the file according to the data & position
+       # Available parameters:  Prefix, Suffix, GridNum, BookmarkName, SeismicName, 
+       #                                          GatherName, WellName, AttrlName, WindowName
+       fileParameters.setNaming(['Prefix','WindowName','SeismicName','AttrName','GridNum'])
+       
+       param.setFileParameters(fileParameters)
+       
+       
+       #######  Data to capture (as a toggle list)
+       dataParam = CaptureDataParameters()
+       
+       ### Add Seismic
+       seismic1=vision.getSeismic('xp_M_aa.fdm')
+       # set seismic1 at toggle position 0
+       dataParam.addSeismic(seismic1,0)
+       # set seismic1 at toggle position 1
+       seismic2=vision.getSeismic('xp_M_a.fdm')
+       dataParam.addSeismic(seismic2,1)
+       
+       ## Add Attribute
+       attribute1=vision.getAttribute('xp_M_a3.fdm')
+       dataParam.addAttribute(attribute1,0)
+       
+       attribute2=vision.getAttribute('xp_M_a2.fdm')
+       dataParam.addAttribute(attribute2,1)
+       
+       param.setDataParameters(dataParam)
+              
+       #######  Location
+       # Location from IL,XL
+       volLocation=VolumeLocation()
+       volLocation.setIL(20200)
+       volLocation.setXL(41284, 41684, 64)
+       param.setLocations(volLocation)
+       
+
+       # Main window
+       captureImage(Window.MAIN_VIEW).capture(param)
+           
+"""
+
+
+def captureImage(window):    # write Fibonacci series up to n
+        """Do the snapshot on for a window
+               
+        :param window: Window name
+        :type window: Window
+
+        """
+        pass
+
+
+
+class DataLocation():
+    """ Location (where the data need to be in the scene)
+       
+    You cannot use this class direclty but rather use :class:`VolumeLocation`, :class:`WellLocation`
+
+    """
+
+
+
+class WellLocation(DataLocation): 
+    """ Set the location in the window from a well location
+    
+    example: 
+           - in the main view it will move the inline/crossline slices to the position of the well
+           - in the gather window it will select the centered gather according to the nearest well position
+
+
+    Below is an example:
+
+    .. code-block:: python
+
+       from vision import *
+
+       #######  Create the parameters
+       param = CaptureParameters()
+
+       # Location from Well
+       # !!! This is the well IDs and not the well names
+       wellList=['w1','GB_015_29_01_2_1_2_1','GB_015_29_01_2_1']
+       wellLocation = WellLocation()
+       wellLocation.addWell(wellList)
+       param.setLocations(wellLocation)
+
+
+    Below are the descriptions of each method:
+
+    """
+
+    def addWell(self, wellList):
+        """Set the list of well
+               
+        :param wellList: This is the well IDs and not the well names
+        :type wellList: list[:class:`string`]
+
+        """
+        pass
+
+
+class VolumeLocation(DataLocation):
+    """ Set the location in the window from Inline & Crossline
+    
+    example: 
+           - in the main view it will move the inline/crossline slices to the position of the well
+           - in the gather window it will select the centered gather according to the nearest well position
+
+
+    Example:
+
+    .. code-block:: python
+
+       from vision import *
+
+       #######  Create the parameters
+       param = CaptureParameters()
+
+       # Location from IL,XL
+       volLocation=VolumeLocation()
+       volLocation.setIL(20200)
+       volLocation.setXL(41284, 41684, 64)
+
+       param.setLocations(volLocation)
+
+
+    Below are the descriptions of each method:
+
+    """
+
+    def setIL(self, pos ):
+        """Set the Inline position
+               
+        :param pos: inline value
+        :type pos: integer
+
+        """
+        pass
+
+    def setIL_(self, min, max, step):
+        """Set the Inline position
+               
+        :param min: first inline
+        :type min: integer
+
+        :param max: last inline
+        :type max: integer
+
+        :param step: inline step
+        :type step: integer
+
+        """
+        pass
+
+    def setXL(self, pos ):
+        """Set the Crossline position
+               
+        :param pos: Crossline value
+        :type pos: integer
+
+        """
+        pass
+
+    def setXL_(self, min, max, step):
+        """Set the Crossline position
+               
+        :param min: first Crossline
+        :type min: integer
+
+        :param max: last Crossline
+        :type max: integer
+
+        :param step: Crossline step
+        :type step: integer
+
+        """
+        pass
+
+    def setPositions(self, pos ):
+        """Set a list of (il,xl)
+
+        .. code-block:: python
+
+           from vision import *
+           
+           #######  Create the parameters
+           param = CaptureParameters()
+           
+           # Location from IL,XL
+           volLocation=VolumeLocation()
+           cdpList = [(1601,4275),(1601,5000)]
+           volLocation.setPositions(cdpList)
+
+           param.setLocations(volLocation)
+
+        :param pos: tuple of inline and crossline
+        :type pos: list of tuple
+
+        """
+        pass
+
+
+
+
+class CaptureDataParameters(): 
+    """ Data to use (as a toggle list)
+
+    Below is an example:
+
+    .. code-block:: python
+
+       from vision import *
+       
+       ### Add Seismic
+       seismic1=vision.getSeismic('xp_M_aa.fdm')
+       # set seismic1 at toggle position 0
+       dataParam.addSeismic(seismic1,0)
+       # set seismic1 at toggle position 1
+       seismic2=vision.getSeismic('xp_M_a.fdm')
+       dataParam.addSeismic(seismic2,1)
+       
+       ## Add Attribute
+       attribute1=vision.getAttribute('xp_M_a3.fdm')
+       dataParam.addAttribute(attribute1,0)
+       
+       attribute2=vision.getAttribute('xp_M_a2.fdm')
+       dataParam.addAttribute(attribute2,1)
+       
+       param.setDataParameters(dataParam)
+
+
+    Below are the descriptions of each method:
+
+    """
+
+    def addSeismic(self, name, idx):
+        """ Add Seismic
+               
+        :param name: name of the seismic as defined in tornado
+        :type name: string
+
+        :param idx: idx in the toggle list (start at 0)
+        :type name: integer
+
+        """
+        pass
+    def addAttribute(self, name, idx):
+        """ Add Attribute
+               
+        :param name: name of the attribute as defined in tornado
+        :type name: string
+
+        :param idx: idx in the toggle list (start at 0)
+        :type name: integer
+
+        """
+        pass
+    def addGather(self, name, idx):
+        """ Add Gather
+
+        :param name: name of the gather as defined in tornado
+        :type name: string
+
+        :param idx: idx in the toggle list (start at 0)
+        :type name: integer
+
+        """
+        pass
+    def clear(self):
+        """ Remove all the items in the toggle list 
+
+        """
+        pass
+
+
+
+
+class CaptureFileParameters(): 
+    """ Description of the output file(s)
+
+    Below is an example:
+
+    .. code-block:: python
+
+       from vision import *
+              
+       #######  Create the parameters
+       param = CaptureParameters()
+       
+       #######  File settings
+       fileParameters = CaptureFileParameters()
+       fileParameters.setPrefix("xxxx")
+       # Output directory
+       fileParameters.setPath("/tmp/")
+       # Image format: png, jpg, png
+       fileParameters.setFormat("png")
+       # Name of the file according to the data & position
+       # Available parameters:  Prefix, Suffix, GridNum, BookmarkName, SeismicName, 
+       #                                          GatherName, WellName, AttrlName, WindowName
+       fileParameters.setNaming(['Prefix','WindowName','SeismicName','AttrName','GridNum'])
+       
+       param.setFileParameters(fileParameters)
+
+
+    Below are the descriptions of each method:
+
+    """
+
+    def setFormat(self, format):
+        """ Image output format
+               
+        :param format: image format (png,jpeg, bmp)
+        :type format: string
+
+        """
+        pass
+    def setPath(self, directory):
+        """ Path for the output images 
+               
+        :param directory: name of the directory to output images
+        :type directory: string
+
+        """
+        pass
+    def setNaming(self, tokens):
+        """
+        Set the tokens to use (ordered) to generate the file names of the images: 
+         Prefix, Suffix, GridNum, BookmarkName, SeismicName, 
+         GatherName, WellName, AttrlName, WindowName
+
+        :param tokens: name of the gather as defined in tornado
+        :type tokens: list[:class:`string`]
+
+        """
+        pass
+    def setPrefix(self, prefix):
+        """ Set the prefix to generate the file names of the images 
+        :param prefix: name of the gather as defined in tornado
+        :type prefix: string
+
+        """
+        pass
+
+
+
+
+class CaptureParameters():
+    """ Parameters needed to create images.
+    
+    Contains: 
+           - Output file description
+           - Data to use (as a toggle list)
+           - Location (where the data need to be in the scene)
+
+    Usage:
+           - Create the parameter
+    .. code-block:: python
+
+       param = CaptureParameters()
+
+           - Set file description
+    .. code-block:: python
+
+       param.setFileParameters()
+
+           - Set data
+    .. code-block:: python
+
+       param.setDataParameters()
+
+           - Set location
+    .. code-block:: python
+
+       param.setLocations()
+
+           - Set Display parameters
+    .. code-block:: python
+
+       param.setDisplayParameters()
+     
+
+    Below are the descriptions of each method:
+
+    """
+
+    def setFileParameters(self, param):
+        """
+               
+        :param param: Parameters describing the output file
+        :type param: :class:`CaptureFileParameters` 
+
+        """
+        pass
+
+    def setLocations(self, param):
+        """
+               
+        :param param: Location (where the data need to be)
+        :type param: :class:`DataLocation` 
+
+        """
+        pass
+    def setDataParameters(self, param):
+        """
+               
+        :param param: Data to use for the screenshot
+        :type param: :class:`CaptureDataParameters` 
+
+        """
+        pass
+    def setDisplayParameters(self, param):
+        """
+               
+        :param param: Display Parameters
+        :type param: :class:`CaptureDisplayParameters`
+
+        """
+        pass
+
+
+class Window:    
+    """ Windows available for the snapshot
+    Attributes:
+        
+          - MAIN_VIEW VALUE          : Main 3D View
+          - GATHER                   : Tornado > Modules > 1D Tomo Analysis
+          - ATTR_PROFILE             : Tornado > Attribute > Analysis > Attribute Profile
+
+    .. seealso:: :func:`captureImage`
+
+    """
+    MAIN_VIEW = 0
+    GATHER = 1
+    ATTR_PROFILE = 2
+
+
+
+
+class CaptureDisplayParameters():
+    """ 
+    Use some saved display parameters 
+        
+    In order to reproduce the same images most of the windows can save the display 
+    parameters into a file. The script provide a facility to reload those parameters.
+
+    Below are the descriptions of each method:
+
+    """
+
+    def setPath(self, filename ):
+        """Set the filename used to save the parameters in tornado
+               
+        :param filename: file name
+        :type filename: string
+
+        """
+        pass
+
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    
+
